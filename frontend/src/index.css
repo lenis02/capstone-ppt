@@ -1,0 +1,383 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@import "tailwindcss";
+
+/* 모던 화이트 + 청록 포인트 + 노란 형광 */
+@theme {
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --color-surface: #ffffff;
+  --color-surface-muted: #fafafa;
+  --color-ink: #0f172a;
+  --color-ink-muted: #475569;
+  --color-ink-faint: #94a3b8;
+  --color-accent: #0d9488;
+  --color-accent-strong: #0f766e;
+  --color-accent-soft: #ecfdf5;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+  }
+}
+
+@layer components {
+  .slide-bullet-list {
+    @apply mt-4 list-none space-y-3;
+  }
+
+  .slide-bullet-list > li {
+    @apply relative pl-6 text-[clamp(1.05rem,2vw,1.25rem)] leading-snug text-ink;
+  }
+
+  .slide-bullet-list > li::before {
+    content: "";
+    @apply pointer-events-none absolute left-0 top-[0.5em] h-[0.5em] w-[0.5em] rounded-full bg-teal-500;
+  }
+
+  /* 슬라이드 전체 컨테이너 — 방향에 따라 들어옴 */
+  .deck-enter-forward {
+    animation: deck-enter-fwd 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .deck-enter-back {
+    animation: deck-enter-bwd 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .slide-enter {
+    animation: slide-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .slide-enter-delay-1 {
+    animation: slide-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 0.07s;
+  }
+
+  .slide-enter-delay-2 {
+    animation: slide-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 0.14s;
+  }
+
+  .slide-enter-delay-3 {
+    animation: slide-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 0.21s;
+  }
+
+  .slide-enter-delay-4 {
+    animation: slide-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: 0.28s;
+  }
+
+  .headline-rule {
+    @apply mt-3 h-0.5 w-16 rounded-full bg-teal-400;
+    transform-origin: left center;
+    animation: draw-x 0.58s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* 카드·박스 호버 */
+  .interactive-surface {
+    @apply transition-[transform,box-shadow,border-color] duration-300 ease-out;
+  }
+
+  .interactive-surface:hover {
+    @apply -translate-y-0.5 border-teal-200/90 shadow-md shadow-teal-900/5;
+  }
+
+  .interactive-surface:active {
+    @apply translate-y-0 scale-[0.995];
+  }
+
+  /* reveal 패널 등장 */
+  .reveal-pop {
+    animation: reveal-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* 간트 막대 채움 */
+  .gantt-bar-anim {
+    animation: gantt-bar-grow 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transform-origin: left center;
+  }
+
+  .slide-num-tick {
+    animation: slide-num-pop 0.45s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  }
+
+  .float-soft {
+    animation: float-y 3s ease-in-out infinite;
+  }
+
+  .pulse-ring {
+    animation: pulse-soft 2.2s ease-in-out infinite;
+  }
+
+  /* 상단 3점 목차 — 25% / 50% / 75%, 끝에서는 해당 방향 선만 숨김 */
+  .outline-rail-three-motion {
+    transform-origin: center center;
+  }
+
+  /* 뷰포트 너비 — nav 안 패딩과 무관하게 좌우 끝까지 선 연장 */
+  .outline-rail-fullbleed {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .outline-rail-line {
+    @apply pointer-events-none absolute top-1/2 z-[1] -translate-y-1/2 rounded-full bg-teal-600;
+    height: 4px;
+    min-height: 4px;
+  }
+
+  /*
+   * `right`는 오른쪽에서의 거리. 끝을 “왼쪽에서 50% − a”에 두려면 right = 50% + a
+   * 이전이 첫 장이 아닐 때만 왼쪽 끝(0)까지; 이전이 첫 장이면 25%↔50%만
+   */
+  .outline-rail-line--to-center-from-prev-edge {
+    left: 0;
+    right: calc(50% + 1.05rem);
+  }
+
+  @media (min-width: 640px) {
+    .outline-rail-line--to-center-from-prev-edge {
+      right: calc(50% + 1.2rem);
+    }
+  }
+
+  .outline-rail-line--to-center-from-prev-inner {
+    left: calc(20% + 0.85rem);
+    right: calc(50% + 1.05rem);
+  }
+
+  @media (min-width: 640px) {
+    .outline-rail-line--to-center-from-prev-inner {
+      left: calc(20% + 0.95rem);
+      right: calc(50% + 1.2rem);
+    }
+  }
+
+  /* 다음이 마지막이 아니면 오른쪽 끝까지; 마지막이면 50%↔75%만 */
+  .outline-rail-line--from-center-to-next-edge {
+    left: calc(50% + 1.05rem);
+    right: 0;
+  }
+
+  @media (min-width: 640px) {
+    .outline-rail-line--from-center-to-next-edge {
+      left: calc(50% + 1.2rem);
+    }
+  }
+
+  .outline-rail-line--from-center-to-next-inner {
+    left: calc(50% + 1.05rem);
+    right: calc(20% + 0.85rem);
+  }
+
+  @media (min-width: 640px) {
+    .outline-rail-line--from-center-to-next-inner {
+      left: calc(50% + 1.2rem);
+      right: calc(20% + 0.95rem);
+    }
+  }
+
+  .outline-rail-three--motion-fwd {
+    animation: outline-rail-three-fwd 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .outline-rail-three--motion-back {
+    animation: outline-rail-three-bwd 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes deck-enter-fwd {
+  from {
+    opacity: 0;
+    transform: translateX(36px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes deck-enter-bwd {
+  from {
+    opacity: 0;
+    transform: translateX(-36px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slide-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gantt-bar-grow {
+  from {
+    opacity: 0;
+    transform: scaleX(0.06);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes slide-num-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes draw-x {
+  from {
+    opacity: 0;
+    transform: scaleX(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes outline-rail-three-fwd {
+  0% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(-0.65rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes outline-rail-three-bwd {
+  0% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(0.65rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes opening-motif-opacity {
+  0%,
+  100% {
+    opacity: 0.38;
+  }
+  50% {
+    opacity: 0.92;
+  }
+}
+
+.opening-motif-pulse-a {
+  animation: opening-motif-opacity 11s ease-in-out infinite;
+}
+
+.opening-motif-pulse-b {
+  animation: opening-motif-opacity 11s ease-in-out infinite;
+  animation-delay: -3.6s;
+}
+
+.opening-motif-pulse-c {
+  animation: opening-motif-opacity 11s ease-in-out infinite;
+  animation-delay: -7.2s;
+}
+
+@keyframes dash-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.svg-path-draw {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: dash-draw 0.9s ease-out forwards;
+}
+
+.svg-path-draw-delay {
+  animation-delay: 0.28s;
+}
