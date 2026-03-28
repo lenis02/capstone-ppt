@@ -269,29 +269,34 @@ function SlideProblemReveal({ revealStep }: SlideRenderProps) {
 
 /** 2: 핵심 기능 — 핵심 문제와 동일 폭 정렬, 3×2 그리드(As-is | 연노랑 To-be) */
 function SlideCoreFeatures(_props: SlideRenderProps) {
+  const featureCellText =
+    'text-[clamp(1.12rem,2.15vw,1.42rem)] font-normal leading-relaxed sm:font-medium';
+  const featureTitleText =
+    'text-[clamp(1.18rem,2.2vw,1.48rem)] font-bold leading-snug tracking-tight text-slate-900';
+
   return (
-    <div className="mx-auto flex h-full min-h-0 w-full max-w-[72rem] flex-col justify-center gap-4">
+    <div className="mx-auto flex h-full min-h-0 w-full max-w-[min(92rem,100%)] flex-col justify-center gap-4">
       <div className="min-w-0">
         <h2 className={titleSlide}>핵심 기능</h2>
         <div className="headline-rule" />
-        <p className="slide-enter-delay-2 mt-1 text-[0.78rem] font-semibold text-teal-800">
+        <p className="slide-enter-delay-2 mt-1 text-[0.88rem] font-semibold text-teal-800 sm:text-[0.92rem]">
           Solution · As-is → To-be
         </p>
 
-        <div className="slide-enter-delay-3 mt-5 min-h-0 overflow-y-auto lg:min-h-[min(48vh,26rem)]">
+        <div className="slide-enter-delay-3 mt-5 min-h-0 overflow-y-auto lg:min-h-[min(54vh,30rem)]">
           <div
-            className="hidden overflow-hidden rounded-2xl border border-teal-100/80 bg-white shadow-[0_4px_6px_-1px_rgba(13,148,136,0.06),0_20px_40px_-16px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] sm:grid sm:grid-cols-2 sm:gap-0"
+            className="hidden overflow-hidden rounded-2xl border border-teal-100/80 bg-white text-[clamp(1rem,1.8vw,1.15rem)] shadow-[0_4px_6px_-1px_rgba(13,148,136,0.06),0_20px_40px_-16px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] sm:grid sm:grid-cols-2 sm:gap-0"
             role="table"
             aria-label="As-is와 To-be 비교"
           >
             <div
-              className="border-b border-r border-slate-100/90 bg-gradient-to-b from-slate-50/95 to-white px-5 py-3.5 text-[0.68rem] font-bold uppercase tracking-[0.22em] text-teal-700"
+              className="border-b border-r border-slate-100/90 bg-gradient-to-b from-slate-50/95 to-white px-6 py-4 text-[0.82rem] font-bold uppercase tracking-[0.2em] text-teal-700 sm:px-7 sm:py-4.5 sm:text-[0.9rem]"
               role="columnheader"
             >
               As-is
             </div>
             <div
-              className="border-b border-slate-100/80 bg-gradient-to-br from-amber-50 via-amber-50 to-amber-100/40 px-5 py-3.5 text-[0.68rem] font-bold uppercase tracking-[0.22em] text-amber-950/75"
+              className="border-b border-slate-100/80 bg-gradient-to-br from-amber-50 via-amber-50 to-amber-100/40 px-6 py-4 text-[0.82rem] font-bold uppercase tracking-[0.2em] text-amber-950/75 sm:px-7 sm:py-4.5 sm:text-[0.9rem]"
               role="columnheader"
             >
               To-be
@@ -299,42 +304,38 @@ function SlideCoreFeatures(_props: SlideRenderProps) {
             {SOLUTION_FEATURES.map((item, i) => (
               <Fragment key={item.title}>
                 <div
-                  className={`group border-r border-slate-100/90 bg-white px-5 py-5 transition-colors duration-200 hover:bg-slate-50/40 ${
+                  className={`group border-r border-slate-100/90 bg-white px-6 py-6 transition-colors duration-200 hover:bg-slate-50/40 sm:px-7 sm:py-7 ${
                     i < SOLUTION_FEATURES.length - 1
                       ? 'border-b border-slate-100/80'
                       : ''
                   }`}
                   role="cell"
                 >
-                  <div className="flex gap-3.5 sm:gap-4">
+                  <div className="flex gap-4 sm:gap-5">
                     <span
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal-100 to-teal-50 text-[0.8rem] font-bold tabular-nums text-teal-700 shadow-sm ring-1 ring-teal-200/50"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal-100 to-teal-50 text-[0.95rem] font-bold tabular-nums text-teal-700 shadow-sm ring-1 ring-teal-200/50 sm:h-12 sm:w-12 sm:text-[1.05rem]"
                       aria-hidden
                     >
                       {i + 1}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p
-                        className={`${bodyTight} font-normal leading-relaxed text-slate-600 sm:font-medium`}
-                      >
+                      <p className={`${featureCellText} text-slate-600`}>
                         {item.asIs}
                       </p>
                     </div>
                   </div>
                 </div>
                 <div
-                  className={`relative border-l-4 border-l-teal-400/35 bg-gradient-to-br from-amber-50/95 via-amber-50/80 to-yellow-50/50 px-5 py-5 ${
+                  className={`relative border-l-4 border-l-teal-400/35 bg-gradient-to-br from-amber-50/95 via-amber-50/80 to-yellow-50/50 px-6 py-6 sm:px-7 sm:py-7 ${
                     i < SOLUTION_FEATURES.length - 1
                       ? 'border-b border-amber-200/25'
                       : ''
                   }`}
                   role="cell"
                 >
-                  <h3 className="text-[0.98rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-[1.05rem]">
-                    {item.title}
-                  </h3>
+                  <h3 className={featureTitleText}>{item.title}</h3>
                   <p
-                    className={`${bodyTight} mt-2.5 pl-0.5 font-normal leading-relaxed text-slate-800 sm:font-medium`}
+                    className={`${featureCellText} mt-3 pl-0.5 text-slate-800`}
                   >
                     {item.toBe}
                   </p>
@@ -343,37 +344,33 @@ function SlideCoreFeatures(_props: SlideRenderProps) {
             ))}
           </div>
 
-          <div className="flex flex-col gap-4 sm:hidden">
+          <div className="flex flex-col gap-5 sm:hidden">
             {SOLUTION_FEATURES.map((item, i) => (
               <div
                 key={item.title}
                 className="overflow-hidden rounded-2xl border border-teal-100/80 bg-white shadow-[0_4px_6px_-1px_rgba(13,148,136,0.05),0_12px_28px_-12px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04]"
               >
-                <div className="border-b border-slate-100/90 bg-gradient-to-b from-slate-50/90 to-white px-4 pb-4 pt-3.5">
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-teal-700">
+                <div className="border-b border-slate-100/90 bg-gradient-to-b from-slate-50/90 to-white px-5 pb-5 pt-4">
+                  <p className="text-[0.78rem] font-bold uppercase tracking-[0.18em] text-teal-700">
                     As-is
                   </p>
-                  <div className="mt-3 flex gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal-100 to-teal-50 text-[0.8rem] font-bold text-teal-700 shadow-sm ring-1 ring-teal-200/50">
+                  <div className="mt-3 flex gap-3.5">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-teal-100 to-teal-50 text-[0.95rem] font-bold text-teal-700 shadow-sm ring-1 ring-teal-200/50">
                       {i + 1}
                     </span>
                     <p
-                      className={`${bodyTight} min-w-0 font-normal leading-relaxed text-slate-600`}
+                      className={`${featureCellText} min-w-0 text-slate-600`}
                     >
                       {item.asIs}
                     </p>
                   </div>
                 </div>
-                <div className="border-l-4 border-l-teal-400/35 bg-gradient-to-br from-amber-50/95 to-yellow-50/45 px-4 py-3.5">
-                  <h3 className="text-[0.98rem] font-bold leading-snug text-slate-900">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-amber-950/70">
+                <div className="border-l-4 border-l-teal-400/35 bg-gradient-to-br from-amber-50/95 to-yellow-50/45 px-5 py-4">
+                  <h3 className={featureTitleText}>{item.title}</h3>
+                  <p className="mt-2.5 text-[0.78rem] font-bold uppercase tracking-[0.18em] text-amber-950/70">
                     To-be
                   </p>
-                  <p
-                    className={`${bodyTight} mt-2 pl-0.5 font-normal leading-relaxed text-slate-800`}
-                  >
+                  <p className={`${featureCellText} mt-2.5 pl-0.5 text-slate-800`}>
                     {item.toBe}
                   </p>
                 </div>
@@ -412,14 +409,14 @@ const GANTT_TASKS: GanttTask[] = [
 
 function GanttChart() {
   return (
-    <div className="slide-enter-delay-2 overflow-x-auto rounded-xl border border-teal-200 bg-white shadow-sm">
+    <div className="slide-enter-delay-2 overflow-x-auto rounded-xl border-2 border-teal-200 bg-white shadow-md">
       <div
-        className="grid min-w-[36rem] grid-cols-[minmax(11.5rem,1.5fr)_repeat(4,minmax(4rem,1fr))]"
+        className="grid min-w-[min(100%,48rem)] grid-cols-[minmax(14.5rem,1.65fr)_repeat(4,minmax(5.5rem,1fr))] sm:min-w-[52rem] lg:min-w-[58rem]"
         role="table"
         aria-label="학기 수행 일정 간트"
       >
         <div
-          className="border-b border-teal-200 bg-teal-100 px-3 py-2.5 text-left text-[0.9rem] font-bold text-slate-800 sm:text-[0.9rem]"
+          className="border-b-2 border-teal-200 bg-teal-100 px-4 py-3.5 text-left text-[clamp(1rem,1.6vw,1.15rem)] font-bold text-slate-800 sm:px-5 sm:py-4 sm:text-[clamp(1.05rem,1.5vw,1.22rem)]"
           role="columnheader"
         >
           세부내용
@@ -427,7 +424,7 @@ function GanttChart() {
         {GANTT_MONTHS.map((m) => (
           <div
             key={m}
-            className="border-b border-l border-teal-200 bg-teal-100 px-2 py-2.5 text-center text-[0.9rem] font-bold text-slate-800 sm:text-[0.9rem]"
+            className="border-b-2 border-l border-teal-200 bg-teal-100 px-3 py-3.5 text-center text-[clamp(1rem,1.6vw,1.15rem)] font-bold text-slate-800 sm:px-4 sm:py-4 sm:text-[clamp(1.05rem,1.5vw,1.22rem)]"
             role="columnheader"
           >
             {m}
@@ -437,7 +434,7 @@ function GanttChart() {
         {GANTT_TASKS.map((task, i) => (
           <Fragment key={task.label}>
             <div
-              className={`flex items-center border-b border-teal-200 px-2 py-2.5 text-[0.78rem] font-medium leading-snug text-slate-800 sm:px-3 sm:text-[0.84rem] ${
+              className={`flex items-center border-b border-teal-200 px-3 py-3.5 text-[clamp(0.95rem,1.55vw,1.12rem)] font-semibold leading-snug text-slate-800 sm:px-5 sm:py-4 sm:text-[clamp(1.02rem,1.45vw,1.18rem)] ${
                 i % 2 === 0 ? 'bg-slate-50/80' : 'bg-white'
               }`}
               role="rowheader"
@@ -453,11 +450,11 @@ function GanttChart() {
               {GANTT_MONTHS.map((m) => (
                 <div
                   key={m}
-                  className="border-l border-teal-100 first:border-l-0"
+                  className="min-h-[3rem] border-l border-teal-100 first:border-l-0 sm:min-h-[3.25rem]"
                   aria-hidden
                 />
               ))}
-              <div className="pointer-events-none absolute inset-x-0 top-1/2 z-[1] h-3 -translate-y-1/2 px-0 sm:h-3.5">
+              <div className="pointer-events-none absolute inset-x-0 top-1/2 z-[1] h-4 -translate-y-1/2 px-0 sm:h-[1.15rem]">
                 <div
                   className="gantt-bar-anim h-full rounded-sm bg-teal-500/75 shadow-sm ring-1 ring-teal-600/15"
                   style={{
@@ -478,7 +475,7 @@ function GanttChart() {
 /** 3: 학기 수행 일정 (간트) */
 function SlideMilestoneGantt(_props: SlideRenderProps) {
   return (
-    <div className="mx-auto w-full max-w-[72rem]">
+    <div className="mx-auto w-full max-w-[min(92rem,100%)]">
       <h2 className={titleSlide}>일정</h2>
       <div className="headline-rule" />
       <p className={`${body} slide-enter-delay-2 mt-4 max-w-[48rem]`}>
