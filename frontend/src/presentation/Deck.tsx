@@ -111,7 +111,7 @@ export function Deck() {
           </div>
           {showRevealHint ? (
             <span className="order-last w-full text-center text-[0.68rem] text-teal-600 sm:order-none sm:w-auto sm:flex-1 sm:text-center">
-              다음 클릭으로 통계·근거 화면 표시
+              다음 클릭으로 핵심 문제 상세 표시
             </span>
           ) : (
             <span className="hidden flex-1 sm:block" aria-hidden />

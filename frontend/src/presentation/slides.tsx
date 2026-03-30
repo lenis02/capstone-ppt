@@ -123,9 +123,9 @@ const MS_WTI_TOP5_IMG = '/ms-wti-top5-obstacles.png';
 const MS_WTI_SOURCE_URL =
   'https://www.microsoft.com/en-us/worklab/work-trend-index/will-ai-fix-work';
 
-/** 1: 핵심 문제 — (0) 본문 → (1) 클릭 시 통계·인포그래픽 */
+/** 1: 핵심 문제 — (0) 통계·인포그래픽 → (1) 핵심 문제 본문 */
 function SlideProblemReveal({ revealStep }: SlideRenderProps) {
-  if (revealStep === 1) {
+  if (revealStep === 0) {
     return (
       <div className="mx-auto flex h-full min-h-0 w-full max-w-[90rem] flex-col justify-center px-1 sm:px-2">
         <div className="slide-enter grid min-h-0 w-full grid-cols-1 items-center gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(14rem,0.65fr)] lg:gap-8 xl:gap-10">
